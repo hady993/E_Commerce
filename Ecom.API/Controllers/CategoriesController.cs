@@ -1,4 +1,6 @@
-﻿using Ecom.Core.Interfaces;
+﻿using Ecom.Core.DTO;
+using Ecom.Core.Entities.Product;
+using Ecom.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -44,14 +46,18 @@ namespace Ecom.API.Controllers
         }
 
         [HttpPost("add-category")]
-        public async Task<IActionResult> add(CategoryDTO category)
+        public async Task<IActionResult> add(CategoryDTO categoryDTO)
         {
             try
             {
-                var category = await work.CategoryRepository.GetByIdAsync(id);
-                if (category is null)
-                    return BadRequest();
-                return Ok(category);
+                var category = new Category()
+                {
+                    Name = categoryDTO.Name,
+                    Description = categoryDTO.Description
+                };
+                await work.CategoryRepository.AddAsync(category);
+                
+                return Ok(new { message = "New item has been added" });
             }
             catch (Exception ex)
             {
