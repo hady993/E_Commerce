@@ -64,11 +64,11 @@ namespace Ecom.API.Controllers
         }
 
         [HttpPut("update-category")]
-        public async Task<IActionResult> update(UpdateCategoryDTO updateCategoryDTO)
+        public async Task<IActionResult> update(UpdateCategoryDTO categoryDTO)
         {
             try
             {
-                var category = mapper.Map<Category>(updateCategoryDTO);
+                var category = mapper.Map<Category>(categoryDTO);
                 await work.CategoryRepository.UpdateAsync(category);
 
                 return Ok(new ResponseAPI(200, "New item has been updated"));

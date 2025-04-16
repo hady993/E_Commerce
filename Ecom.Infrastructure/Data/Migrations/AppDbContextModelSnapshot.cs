@@ -100,7 +100,10 @@ namespace Ecom.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal>("NewPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("OldPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
@@ -116,7 +119,8 @@ namespace Ecom.Infrastructure.Data.Migrations
                             CategoryId = 1,
                             Description = "Test",
                             Name = "Test",
-                            Price = 12m
+                            NewPrice = 12m,
+                            OldPrice = 0m
                         });
                 });
 
