@@ -9,14 +9,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Ecom.Infrastructure.Data.Config
 {
-    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
+    public class PhotoConfiguration : IEntityTypeConfiguration<Photo>
     {
-        public void Configure(EntityTypeBuilder<Category> builder)
+        public void Configure(EntityTypeBuilder<Photo> builder)
         {
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(30);
-            builder.Property(x => x.Id).IsRequired();
             builder.HasData(
-                new Category { Id = 1, Name = "Test", Description = "Test" }
+                new Photo { Id = 3, ImageName = "test", ProductId = 1 }
             );
         }
     }
