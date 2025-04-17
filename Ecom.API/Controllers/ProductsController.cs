@@ -27,7 +27,7 @@ namespace Ecom.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new ResponseAPI(400, ex.Message));
             }
         }
 
@@ -44,7 +44,7 @@ namespace Ecom.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new ResponseAPI(400, ex.Message));
             }
         }
 
@@ -59,7 +59,39 @@ namespace Ecom.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(new ResponseAPI(400, ex.Message));
+            }
+        }
+
+        [HttpPut("update-product")]
+        public async Task<IActionResult> update(UpdateProductDTO updateProductDTO)
+        {
+            try
+            {
+                await work.ProductRepository.UpdateAsync(updateProductDTO);
+
+                return Ok(new ResponseAPI(200, "New item has been updated"));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseAPI(400, ex.Message));
+            }
+        }
+
+        [HttpDelete("delete-product/{id}")]
+        public async Task<IActionResult> delete(int id)
+        {
+            try
+            {
+                var product = await work.ProductRepository.GetByIdAsync(id, x => x.Photos, x => x.Category);
+                await work.ProductRepository.DeleteAsync(product);
+
+                return Ok(new ResponseAPI(200, "New item has been deleted"));
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(new ResponseAPI(400, ex.Message));
             }
         }
     }
